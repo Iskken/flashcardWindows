@@ -15,15 +15,44 @@ Deck::Deck(const std::string &title)
     clist = new ChoiceCard[capacity_clist];
 }
 
+Deck& Deck::operator=(const Deck &other) { //we need it for erase function to work properly 
+        if (this == &other) {
+            return *this; 
+        }
+
+        delete[] flist;// delete previous data
+        delete[] clist;
+
+        deck_title = other.deck_title;  //copying data of other object
+        number_of_cards_flist = other.number_of_cards_flist;
+        number_of_cards_clist = other.number_of_cards_clist;
+        capacity_flist = other.capacity_flist;
+        capacity_clist = other.capacity_clist;
+
+        flist = new Flashcard[capacity_flist];//copying elements
+        for (int i = 0; i < number_of_cards_flist; ++i) {
+            flist[i] = other.flist[i];
+        }
+
+        clist = new ChoiceCard[capacity_clist];
+        for (int i = 0; i < number_of_cards_clist; ++i) {
+            clist[i] = other.clist[i];
+        }
+
+        return *this;
+}
+
 Deck::Deck(const Deck &other)
     : deck_title(other.deck_title), flist(new Flashcard[other.capacity_flist]),
       clist(new ChoiceCard[other.capacity_clist]), number_of_cards_flist(other.number_of_cards_flist),
       number_of_cards_clist(other.number_of_cards_clist), capacity_flist(other.capacity_flist),
       capacity_clist(other.capacity_clist) {
+    flist = new Flashcard[capacity_flist];
     for (int i = 0; i< number_of_cards_flist; i++)
     {
         flist[i] = other.flist[i];
     }
+    clist = new ChoiceCard[capacity_clist];
     for (int i = 0; i < number_of_cards_clist; i++)
     {
         clist[i] = other.clist[i];
@@ -55,7 +84,7 @@ void Deck::reviewDeck() const {
         std::cout << "Answer:" << flist[i].getans() << "\n";
         std::cout << "Press 'Y' to continue reviewing\n";
         KeyPress('y');
-        std::system("clear"); // to clear the console after the review is done
+        std::system("cls"); // to clear the console after the review is done
     }
 
     for (int i = 0; i < number_of_cards_clist; i++) { 
@@ -69,7 +98,7 @@ void Deck::reviewDeck() const {
         std::cout << "Answer:" << clist[i].getans() << "\n";
         std::cout << "Press 'Y' to continue reviewing\n";
         KeyPress('y');
-        std::system("clear"); // to clear the console after the review is done
+        std::system("cls"); // to clear the console after the review is done
     }
     std::cout << "Congratulations! You have finished the deck for now!\n";
     std::this_thread::sleep_for(std::chrono::seconds(2));

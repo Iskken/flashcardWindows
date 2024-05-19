@@ -12,7 +12,7 @@ void listDecks(std::vector<Deck> &Decks)
 {
     if (Decks.empty())
     {
-        std::system("clear");
+        std::system("cls");
         std::cout << "There are no decks to review!\n";
         std::this_thread::sleep_for(std::chrono::seconds(2));
         return;
@@ -236,9 +236,10 @@ void deleteDeck(DatabaseHandler &db, std::vector <Deck> &decks)
             std::cerr << "Invalid option! Please try again.\n";
         }
     }
-    const char * deckTitle = decks[option-1].getTitle().c_str();
-    deckId = db.getDeckId(deckTitle);
+    std::string deckTitle = decks[option-1].getTitle();
+    deckId = db.getDeckId(deckTitle.c_str()); //checking
     decks.erase(decks.begin() + (option-1)); //the erase() function should call the destructor of Deck
+     std::cout << deckId<< " - decktitle debugging\n";
     try{
         if (!db.deleteDeck(deckId))
             throw CustomException("Deck deletion was unsuccessful");
@@ -292,8 +293,8 @@ void deleteCard(DatabaseHandler &db, std::vector <Deck> &decks)
         }
     }
     validOption = false;
-    const char * deckTitle = decks[option-1].getTitle().c_str();
-    deckId = db.getDeckId(deckTitle);
+    std::string deckTitle = decks[option-1].getTitle();
+    deckId = db.getDeckId(deckTitle.c_str());
     if (decks[option-1].getNumClist() == 0 && decks[option-1].getNumFlist() == 0)
     {
         std::system("cls");

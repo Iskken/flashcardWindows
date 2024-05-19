@@ -10,11 +10,12 @@
                 "/EHsc",
                 "/nologo",
                 "/Fe${workspaceFolder}\\bin\\${fileBasenameNoExtension}.exe", // Output executable in a bin directory
-                "${workspaceFolder}\\src\\main.cpp",        
-                "${workspaceFolder}\\src\\Deck.cpp",     
+                "${workspaceFolder}\\src\\main.cpp",
+                "${workspaceFolder}\\src\\Deck.cpp",
                 "${workspaceFolder}\\src\\CustomException.cpp",
                 "${workspaceFolder}\\src\\DatabaseHandler.cpp",
-                "/I${workspaceFolder}\\lib", // Include path for headers
+                "/I${workspaceFolder}\\include", // Include path for headers
+                "/I${workspaceFolder}\\lib",    // Include path for SQLite headers
                 "/link",
                 "/LIBPATH:${workspaceFolder}\\lib", // Library path for sqlite3.lib
                 "sqlite3.lib",

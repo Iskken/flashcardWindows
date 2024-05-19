@@ -15,6 +15,7 @@ class Deck {
 public:
     Deck(const std::string &title);
     Deck(const Deck &other);
+    Deck& operator=(const Deck &other); //need it for erase() function of the vector<Decks> to work properly
     std::string getTitle() const{
         return deck_title;
     }
